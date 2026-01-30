@@ -1,37 +1,32 @@
 package me.michalsmoladev.LibrarySystem.User.Presentation.Controller;
 
 import me.michalsmoladev.LibrarySystem.Configuration.Application.Jwt.JwtService;
-import me.michalsmoladev.LibrarySystem.User.Domain.Entity.User;
-import me.michalsmoladev.LibrarySystem.User.Domain.Entity.UserRepositoryInterface;
+import me.michalsmoladev.LibrarySystem.User.Application.CreateUser.CreateUserCommand;
+import me.michalsmoladev.LibrarySystem.User.Application.CreateUser.DTO.CreateUserDTO;
+import me.michalsmoladev.LibrarySystem.User.Application.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class UserController {
     @Autowired
-    private UserRepositoryInterface userRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private UserService userService;
 
     @Autowired
     private JwtService jwtService;
 
     @PostMapping("/api/user/create")
-    public String createUser() {
-        User user = new User();
-        user.setEmail("admin@example.com");
-        user.setPassword(this.passwordEncoder.encode("admin"));
-        user.setUsername("admin");
-        user.setRole("ROLE_ADMIN");
+    public ResponseEntity<Void> createUser(@RequestBody CreateUserDTO createUserDTO) {
+        this.userService.createUser(
+                new CreateUserCommand(createUserDTO)
+        );
 
-        this.userRepository.save(user);
-
-        return user.getEmail();
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/api/user/login")
