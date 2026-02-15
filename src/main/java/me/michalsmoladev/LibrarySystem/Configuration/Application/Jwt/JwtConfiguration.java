@@ -55,11 +55,6 @@ public class JwtConfiguration {
     }
 
     @Bean
-    UserDetailsService users(DataSource dataSource) {
-        return new JdbcUserDetailsManager(dataSource);
-    }
-
-    @Bean
     JwtDecoder jwtDecoder() {
         return NimbusJwtDecoder.withPublicKey(this.publicKey).build();
     }
