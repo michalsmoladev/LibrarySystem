@@ -1,4 +1,4 @@
-package me.michalsmoladev.LibrarySystem.User.Application.LoginUser.DTO;
+package me.michalsmoladev.LibrarySystem.User.Application.Command.LoginUser.DTO;
 
 public class LoginUserResponseDTO {
     public String token;

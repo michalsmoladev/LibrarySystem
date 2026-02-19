@@ -1,4 +1,4 @@
-package me.michalsmoladev.LibrarySystem.User.Application.CreateUser.DTO;
+package me.michalsmoladev.LibrarySystem.User.Application.Command.CreateUser.DTO;
 
 public class CreateUserDTO {
     public String username;
